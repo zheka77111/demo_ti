@@ -349,13 +349,13 @@ def eval_report(
     schema_model: type[BaseModel] = build_comparison_table(entity)
     cfg = ENTITY_TEXTS[entity]
 
-    key = os.environ.get("OPENAI")
+
     model = ChatOpenAI(
-        model="gpt-5.4-nano",
-        api_key=key,
-        temperature=0,
-        top_p=0.5,
-    )
+            model="gpt-5.4-nano",
+            temperature=0.7,
+            api_key=os.getenv("OPENROUTER_API_KEY"),
+            base_url="https://openrouter.ai/api/v1",
+        )
 
     system_prompt = SystemMessage(content=comparison_eval_system_message(entity))
     reference_report_agent = create_agent(
